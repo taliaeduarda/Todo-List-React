@@ -1,55 +1,45 @@
-import React, { Component } from "react";
-import NewTodoForm from "./NewTodoForm";
-import Todo from "./Todo";
+import React, { Component } from 'react'
+import Todo from './Todo'
+import NewTodoForm from './NewTodoForm'
 
 class TodoList extends Component {
   constructor(props) {
-    super(props);
-    this.state = { todos: [] };
-    this.create = this.create.bind(this);
-    this.remove = this.remove.bind(this);
-    this.update = this.update.bind(this);
+    super(props)
+    this.state = {todos: []}
+    this.create = this.create.bind(this)
+    this.remove = this.remove.bind(this)
   }
+
+  // Adicionando todos do componente filho no state
   create(newTodo) {
     this.setState({
-      todos: [...this.state.todos, newTodo],
-    });
+      todos: [...this.state.todos, newTodo]
+    })
+    // Agora é só passar como props pro NewTodoForm, ln 35
   }
-  remove(id) {
+
+  // Removendo tasks através da id
+  remove(id){
     this.setState({
-      todos: this.state.todos.filter((t) => t.id !== id),
-    });
+      todos: this.state.todos.filter(t => t.id !== id) // retorna uma nova array sem aquela task 
+    })
   }
-  update(id, updateTask) {
-    const updateTodos = this.state.todos.map((todo) => {
-      if (todo.id === id) {
-        return { ...todo, task: updateTask };
-      }
-      return todo;
-    });
-    this.setState({
-      todos: updateTodos,
-    });
-  }
+  
   render() {
-    const todos = this.state.todos.map((todo) => {
-      return (
-        <Todo
-          key={todo.id}
-          id={todo.id}
-          task={todo.task}
-          removeTodo={this.remove}
-          updateTodo={this.update}
-        />
-      );
-    });
+    const todos = this.state.todos.map(todo => {
+      return <Todo 
+      key={todo.id} 
+      id={todo.id}
+      task={todo.task} 
+      removeTodo={this.remove} /> // renderiza as tasks que foram passadas como props para o comp
+    })
     return (
       <div>
-        <h1>Todo List</h1>
-        <NewTodoForm createTodo={this.create} />
+        <h1>Todo List!</h1> 
+        <NewTodoForm createTodo={this.create}/> 
         <ul>{todos}</ul>
       </div>
-    );
+    )
   }
 }
 
