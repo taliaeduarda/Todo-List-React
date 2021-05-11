@@ -8,6 +8,7 @@ class TodoList extends Component {
     this.state = {todos: []}
     this.create = this.create.bind(this)
     this.remove = this.remove.bind(this)
+    this.update = this.update.bind(this)
   }
 
   // Adicionando todos do componente filho no state
@@ -24,6 +25,19 @@ class TodoList extends Component {
       todos: this.state.todos.filter(t => t.id !== id) // retorna uma nova array sem aquela task 
     })
   }
+
+  // Atualizando a task 
+  update(id, updatedTask) {
+    const updatedTodos = this.state.todos.map(todo => {
+      if(todo.id === id){
+        // mantem o todo mas atualiza a task
+        return {...todo, task: updatedTask}
+      }
+        // se não ele retorna o todo sem modificações
+        return todo;
+    })
+    this.setState({todos: updatedTodos})
+  }
   
   render() {
     const todos = this.state.todos.map(todo => {
@@ -31,7 +45,8 @@ class TodoList extends Component {
       key={todo.id} 
       id={todo.id}
       task={todo.task} 
-      removeTodo={this.remove} /> // renderiza as tasks que foram passadas como props para o comp
+      removeTodo={this.remove}
+      updateTodo={this.update} /> // renderiza as tasks que foram passadas como props para o comp
     })
     return (
       <div>
