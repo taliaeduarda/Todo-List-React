@@ -20,7 +20,7 @@ class NewTodoForm extends Component {
  handleSubmit(evt){
    evt.preventDefault()
    // Passando state para o comp pai como objeto junto com um id
-   this.props.createTodo({...this.state, id: uuid()})
+   this.props.createTodo({...this.state, id: uuid(), completed: false})
    // Limpando o state
    this.setState({ task: ''})
  }
